@@ -1,0 +1,40 @@
+name: build-and-test
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: dtolnay/rust-toolchain@1.89.0
+
+      - name: Install Solana CLI
+        run: |
+          sh -c "$(curl -sSfL https://release.solana.com/stable/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
+
+      - name: Install Anchor CLI
+        run: npm install -g @coral-xyz/anchor-cli
+
+      - name: Build program
+        run: anchor build
+
+      - name: Run tests
+        run: cargo test --manifest-path programs/ludic/Cargo.toml
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ludic-program
+          path: |
+            target/deploy/ludic.so
+            target/idl/ludic.json
