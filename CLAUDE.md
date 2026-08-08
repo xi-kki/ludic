@@ -36,20 +36,20 @@ keys/               deploy keypair — GITIGNORED, never commit
 ## Build & Test
 - CI builds and tests: `anchor build` then `cargo test --manifest-path programs/ludic/Cargo.toml`
 - Artifacts: `target/deploy/ludic.so` + `target/idl/ludic.json` (uploaded as CI artifact `ludic-program`)
-- Deploy (from Windows): download CI artifact → `solana program deploy target/deploy/ludic.so --program-id keys/deploy-keypair.json --url devnet --fee-payer keys/deploy-keypair.json`
+- Deploy (from Windows): download CI artifact → `solana program deploy deploy/ludic.so --program-id keys/deploy-keypair.json --fee-payer keys/fee-payer.json --url https://api.devnet.solana.com` (program keypair must be empty; fee payer must be funded)
 - On this Windows box, anchor/solana CLIs run through `.cmd` wrappers in `C:/tmp/tools` (git-bash cannot exec the PE binaries directly).
 
 ## Security (NON-NEGOTIABLE)
 1. NEVER commit `keys/deploy-keypair.json` (already gitignored) or any `.env`
 2. All user inputs validated in-program (move index 0-8, turn checks, cell occupancy)
 3. Frontend: never derive private keys, never send SOL without explicit user intent
-4. No secrets in the Next.js bundle — public RPC + program ID only
-5. Before ship: secret scan (gitleaks) over the repo
+4. No secrets in the web bundle — public RPC + program ID only
+5. Before ship: secret scan over the repo (keys/ and artifacts/ are gitignored)
 
 ## Roadmap
 - [x] Program: create_game, place_move, win/draw detection
-- [x] Tests: create, win, draw, invalid index, occupied cell, wrong turn, game over
-- [ ] CI build green, program deployed to devnet
-- [ ] Next.js: wallet connect, arcade hub, Tic-Tac-Toe board
-- [ ] Vercel deploy + README + push
-- Later games: hub is built so new games drop in as separate Anchor programs
+- [x] Tests: create, win, draw, invalid index, occupied cell, wrong turn, game over (litesvm, CI)
+- [x] CI build green, program deployed to devnet (EBNzCwTjBuuShtM47Cux5nMNesRa2BVSamaPJtPaKYje)
+- [x] Frontend: Vite + React hub + Tic-Tac-Toe, deployed to Vercel
+- [x] E2E smoke test passed against devnet
+- Later games: Connect Four, Snake, Memory (hub is built to drop in new Anchor programs)
