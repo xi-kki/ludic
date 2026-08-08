@@ -11,3 +11,5 @@ keys/
 node_modules
 .env
 dist
+
+.vercel
