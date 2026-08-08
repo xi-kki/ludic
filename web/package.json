@@ -1,0 +1,30 @@
+{
+  "name": "ludic-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@solana/wallet-adapter-base": "^0.9.27",
+    "@solana/wallet-adapter-phantom": "^0.9.29",
+    "@solana/wallet-adapter-react": "^0.15.39",
+    "@solana/wallet-adapter-react-ui": "^0.9.39",
+    "@solana/wallet-adapter-solflare": "^0.6.33",
+    "@solana/web3.js": "^1.98.4",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^5",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vite": "^7"
+  }
+}

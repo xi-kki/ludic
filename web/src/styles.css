@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #0a0a14;
+  --color-surface: #12121f;
+  --color-surface-2: #181828;
+  --color-neon: #22d3ee;
+  --color-neon-dim: #0891b2;
+  --color-violet: #8b5cf6;
+  --color-x: #22d3ee;
+  --color-o: #f472b6;
+}
+
+:root {
+  --background: #0a0a14;
+  --foreground: #e2e8f0;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Subtle arcade grid backdrop */
+.arcade-bg {
+  background-image:
+    linear-gradient(rgba(139, 92, 246, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.neon-glow {
+  text-shadow:
+    0 0 12px rgba(34, 211, 238, 0.7),
+    0 0 32px rgba(139, 92, 246, 0.4);
+}
+
+.card-glow:hover {
+  box-shadow:
+    0 0 24px rgba(139, 92, 246, 0.35),
+    0 0 64px rgba(34, 211, 238, 0.15);
+  transform: translateY(-2px);
+}
+
+@keyframes pulse-board {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.awaiting-move {
+  animation: pulse-board 1.4s ease-in-out infinite;
+}
