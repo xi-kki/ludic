@@ -11,9 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
 
       - uses: dtolnay/rust-toolchain@1.89.0
 
@@ -23,11 +20,14 @@ jobs:
           echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
 
       - name: Install Anchor CLI
-        run: npm install -g @coral-xyz/anchor-cli
+        run: |
+          curl -sSL -o /usr/local/bin/anchor \
+            https://github.com/coral-xyz/anchor/releases/download/v1.1.2/anchor-1.1.2-x86_64-unknown-linux-gnu
+          chmod +x /usr/local/bin/anchor
+          anchor --version
 
       - name: Build program
         run: anchor build
-
       - name: Run tests
         run: cargo test --manifest-path programs/ludic/Cargo.toml
 
